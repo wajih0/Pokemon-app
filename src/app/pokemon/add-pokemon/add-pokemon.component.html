@@ -1,0 +1,219 @@
+<div class="container mt-5">
+    <div class="card">
+      <div class="row g-0">
+        <div
+          class="col-md-4 d-flex align-items-center justify-content-center bg-light"
+        >
+          <img
+            [src]="PokemonPicture.value"
+            class="img-fluid rounded-start"
+            [alt]="PokemonName.value"
+          />
+        </div>
+        <div class="col-md-8">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="card-body">
+              <h2 class="card-title">Ajouter un nouveau Pokémon</h2>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">Nom</th>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [class.is-invalid]="PokemonName.invalid && PokemonName.dirty"
+                        formControlName="name"
+                        placeholder="Nom du Pokémon"
+                      />
+                      @if(PokemonName.dirty) {
+                        @if(PokemonName.hasError('required')) {
+                        <div class="invalid-feedback">
+                          Veuillez renseigner ce champ.
+                        </div>
+                        } @if(PokemonName.hasError('minlength')) {
+                        <div class="invalid-feedback">
+                          Veuillez saisir un nom plus long. (Minimum :
+                          {{ PokemonName.getError("minlength").requiredLength }}
+                          caractères)
+                        </div>
+                        } @if(PokemonName.hasError('maxlength')) {
+                        <div class="invalid-feedback">
+                          Veuillez saisir un nom plus court. (Maximum :
+                          {{ PokemonName.getError("maxlength").requiredLength }}
+                          caractères)
+                        </div>
+                        } @if(PokemonName.hasError('pattern')) {
+                        <div class="invalid-feedback">
+                          Veuillez saisir uniquement des lettres.
+                        </div>
+                        }
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Image</th>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [class.is-invalid]="PokemonPicture.invalid && PokemonPicture.dirty"
+                        formControlName="picture"
+                        placeholder="URL de l'image du Pokémon"
+                      />
+                      @if(PokemonPicture.invalid && PokemonPicture.dirty) {
+                      <div class="invalid-feedback">
+                        Veuillez renseigner ce champ.
+                      </div>
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Points de vie</th>
+                    <td>
+                      <div class="input-group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          [disabled]="
+                           PokemonLife.value <= Pokemon_Rules.MIN_LIFE
+                          "
+                          (click)="decrementlife()"
+                        >
+                          -
+                        </button>
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          formControlName="life"
+                          readonly
+                        />
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          [disabled]="
+                            PokemonLife.value >= Pokemon_Rules.MAX_LIFE
+                          "
+                          (click)="incrementlife()"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Dégâts</th>
+                    <td>
+                      <div class="input-group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          [disabled]="
+                            PokemonDamage.value <= Pokemon_Rules.MIN_DAMAGE
+                          "
+                          (click)="decrementdamage()"
+                        >
+                          -
+                        </button>
+                        <input
+                          type="number"
+                          formControlName="damage"
+                          class="form-control text-center"
+                          readonly
+                        />
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          [disabled]="
+                            PokemonDamage.value >=Pokemon_Rules.MAX_DAMAGE
+                          "
+                          (click)="incrementdamage()"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Types</th>
+                    <td>
+                      @for(type of pokemonTypeList.controls; track type; let index
+                      = $index) {
+                      <button
+                        type="button"
+                        class="btn btn-secondary btn-sm rounded-pill m-1"
+                        (click)="pokemonTypeList.removeAt(index)"
+                       
+                        [style.color]="
+                          type.value === 'Electrik' ? 'black' : 'white'
+                        "
+                      >
+                        {{ type.value }}
+                        <span
+                          class="badge"
+                          [style.color]="
+                            type.value === 'Electrik' ? 'black' : 'white'
+                          "
+                          >x</span
+                        >
+                      </button>
+                      } @if(pokemonTypeList.hasError('required')) {
+                      <p class="text-danger">
+                        Veuillez sélectionner au moins un type pour un Pokémon.
+                      </p>
+                      } @if(pokemonTypeList.hasError('maxlength')) {
+                      <p class="text-danger">
+                        Veuillez sélectionner au maximum
+                        {{ pokemonTypeList.getError("maxlength").requiredLength }}
+                        types pour un Pokémon.
+                      </p>
+                      }
+                      <div class="row mt-3">
+                        @for(type of pokemonService.getpokemontypes(); track
+                        type) {
+                        <div class="col-md-4">
+                          <div class="form-check">
+                            <input
+                              #checkbox
+                              class="form-check-input"
+                              type="checkbox"
+                              [checked]="ispokemonTypeListSelected(type)"
+                              [disabled]="ispokemonTypeListSelected(type)"
+                              (change)="
+                                onpokemonTypeListChange(type, checkbox.checked)
+                              "
+                              [value]="type"
+                              [id]="type"
+                            />
+                            <label class="form-check-label" [for]="type">
+                              {{ type }}
+                            </label>
+                          </div>
+                        </div>
+                        }
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between mt-4">
+                <button
+                  type="button"
+                  class="btn btn-link text-decoration-none text-warning"
+                  routerLink="/pokemons"
+                >
+                  ANNULER
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-link text-decoration-none text-warning"
+                >
+                  SAUVEGARDER LES CHANGEMENTS
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
