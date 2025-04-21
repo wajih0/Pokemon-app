@@ -36,7 +36,7 @@ export class ChatbotComponent {
       temperature: 0.7
     }, {
       headers: {
-       // 'Authorization': 'Bearer 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',
+        'Authorization': 'Bearer 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',
         'Content-Type': 'application/json'
       }
     }).subscribe((response) => {
