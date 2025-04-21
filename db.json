@@ -137,6 +137,17 @@
         "Feu"
       ],
       "created": "2024-08-16T00:00:00Z"
+    },
+    {
+      "name": "siki",
+      "picture": "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/025.png",
+      "life": 10,
+      "dammage": 1,
+      "types": [
+        "Normal"
+      ],
+      "created_at": "2025-04-14T11:48:57.369Z",
+      "id": 13
     }
   ]
 }

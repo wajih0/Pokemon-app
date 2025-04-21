@@ -8,7 +8,8 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
   selector: 'app-add-pokemon',
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './add-pokemon.component.html',
-  styles: ``
+  styles: ``,
+  standalone: true,
 })
 export class AddPokemonComponent {
   readonly route = inject(ActivatedRoute); // Permet d'accéder aux paramètres de l'URL.

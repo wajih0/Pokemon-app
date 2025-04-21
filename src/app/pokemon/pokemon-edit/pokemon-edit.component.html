@@ -119,7 +119,7 @@
                     <pre>{{ pokemonTypeList.errors | json }}</pre>
                     
                     <div class="row mt-3">
-                      @for(type of pokemonService.getpokemontypes(); track type) {
+                      @for(type of pokemonService.getPokemonTypeList(); track type) {
                       <div class="col-md-4">
                         <div class="form-check">
                           <input #checkbox (change)="onpokemonTypeListChange(type,checkbox.checked)"
@@ -165,4 +165,4 @@
   }
 </div>
 
-<pre>{{ form.value | json }}</pre>
+<!-- <pre>{{ form.value | json }}</pre> -->

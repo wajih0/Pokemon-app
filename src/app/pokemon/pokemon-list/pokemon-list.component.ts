@@ -5,19 +5,20 @@ import { PokemonService } from '../../pokemon.service';
 import { Pokemon, PokemonList } from '../../pokemon.model';
 import { PokemonBorderDirective } from '../../pokemon-border.derective';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-pokemon-list',
-  imports: [PokemonBorderDirective,DatePipe,RouterLink],
+  imports: [PokemonBorderDirective,DatePipe,RouterLink,MatIconModule],
   templateUrl: './pokemon-list.component.html',
   styles: `.pokemon-card{cursor:pointer}`,
-  providers: [PokemonService],
+  standalone: true,
 })
 export class PokemonListComponent {
   readonly #pokemonserver = inject(PokemonService);
   readonly PokemonList: Signal<PokemonList | undefined> = toSignal(
-    this.#pokemonserver.getPokemons()
+    this.#pokemonserver.getPokemonList()
     
   );
     readonly searchTerm =signal('');

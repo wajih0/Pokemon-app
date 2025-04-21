@@ -10,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [RouterLink,DatePipe],
   templateUrl:'./pokemon-profile.component.html',
   styles: ``,
-  providers: [PokemonService],
+  standalone: true,
 })
 export class PokemonProfileComponent {
 readonly router = inject(ActivatedRoute);

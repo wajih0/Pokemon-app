@@ -1,0 +1,15 @@
+<div class="chat-container">
+    <h2>👨‍🔬 Professeur Pokémon</h2>
+  
+    <div class="chat-box">
+      <div *ngFor="let message of messages">
+        <p><strong>{{ message.role === 'user' ? '🧑‍🎓 Vous' : '👨‍🔬 Professeur' }}:</strong> {{ message.content }}</p>
+      </div>
+    </div>
+  
+    <form (submit)="sendMessage()">
+      <input [(ngModel)]="userInput" name="message" placeholder="Pose une question..." required />
+      <button type="submit">Envoyer</button>
+    </form>
+  </div>
+  

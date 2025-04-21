@@ -10,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [RouterLink, ReactiveFormsModule, JsonPipe], // Modules Angular nécessaires pour ce composant.
   templateUrl: './pokemon-edit.component.html', // Chemin vers le fichier HTML du template.
   styles: ``, // Styles spécifiques au composant (vide ici).
-  providers: [PokemonService], // Fournit le service `PokemonService` au composant.
+  standalone: true, // Fournit le service `PokemonService` au composant.
 })
 export class PokemonEditComponent {
   // Injecte les dépendances nécessaires.
